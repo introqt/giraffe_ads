@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Ad;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $ads = Ad::all();
+        $user_id = Auth::id();
+        return view('home',
+            [
+                'ads' => $ads,
+                'user_id' => $user_id
+            ]
+        );
     }
 }

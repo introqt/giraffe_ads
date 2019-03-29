@@ -44,6 +44,7 @@
         </div>
 
         @if ($ads->isNotEmpty())
+            <br>
             <div class="row justify-content-center">{{ $ads->render() }}</div>
         @endif
     </div>

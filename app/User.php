@@ -40,11 +40,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function ads()
     {
         return $this->hasMany('App\Ad');
     }
 
+    /**
+     * @param int $userId
+     * @return bool
+     */
     public function checkNeedShowButtonByUserId(int $userId): bool
     {
         return $this->id == $userId;

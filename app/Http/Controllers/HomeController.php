@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = Ad::paginate(3);
+        $ads = Ad::orderBy('created_at', 'desc')->paginate(3);
 
         return view('home', compact('ads'));
     }

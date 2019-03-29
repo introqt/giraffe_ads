@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container">
-        @if($user_id)
+        @if(Auth::check())
             <div class="row">
                 <div class="col-md-4">
-                    <a href="/create">
-                        <button class="btn btn-primary">Create ad</button>
+                    <a href="/ads/create">
+                        <button class="btn btn-success">Create ad</button>
                     </a>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     <div class="col-md-4">
                         <div class="card">
                             <div class="card-header">
-                                <a href="/{{$ad->id}}">{{ $ad->title }}</a>
+                                <a href="/ads/{{$ad->id}}">{{ $ad->title }}</a>
                             </div>
 
                             <div class="card-body">
@@ -33,15 +33,21 @@
                                 <br>
                                 <p>Posted by {{ $ad->user->name }} {{ $ad->created_at }}</p>
                             </div>
-                            @if($user_id == $ad->user_id)
+                            @if(Auth::user()->checkNeedShowButtonByUserId($ad->user_id))
                                 <div class="card-footer">
-                                    <a class="link-button" href="/edit/{{$ad->id}}">
+                                    <a class="link-button" href="/ads/{{$ad->id}}/edit">
                                         <button class="btn btn-primary">Edit</button>
                                     </a>
 
-                                    <a href="/delete/{{$ad->id}}" class="link-button">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </a>
+                                    <form method="POST" action="/ads/{{$ad->id}}" style="display: inline;">
+                                        @method('DELETE')
+                                        @csrf
+
+                                        <button class="btn btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this ad?');">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
                             @endif
                         </div>

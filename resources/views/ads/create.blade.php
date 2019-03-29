@@ -3,11 +3,11 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <h2>Create ad here</h2>
+            <h2 class="title">Create ad here</h2>
         </div>
 
         <div class="row justify-content-center">
-            <form method="POST" action="/save" class="col-md-6">
+            <form method="POST" action="/ads" class="col-md-6">
                 @csrf
                 <div class="form-group">
                     @if($errors->any())

@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Ad');
     }
+
+    public function checkNeedShowButtonByUserId(int $userId): bool
+    {
+        return $this->id == $userId;
+    }
 }

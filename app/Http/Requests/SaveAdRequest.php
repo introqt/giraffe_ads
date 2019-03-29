@@ -26,7 +26,7 @@ class SaveAdRequest extends FormRequest
     {
         return [
             'title' => 'string|required|min:3',
-            'description' => 'string|required|min:5',
+            'description' => 'string|required|min:5|max:255',
         ];
     }
 }

@@ -8,6 +8,7 @@
                 <div class="card-body">{{ $ad->description }}</div>
                 <div class="card-footer">Author: {{ $ad->user->name }}. Created at {{ $ad->created_at }}. Last updated
                     at {{ $ad->updated_at }}.</div>
+                @include('layouts.buttons')
             </div>
         </div>
     </div>

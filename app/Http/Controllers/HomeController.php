@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $ads = Ad::all();
+        $ads = Ad::paginate(3);
 
         return view('home', compact('ads'));
     }

@@ -2,6 +2,17 @@
 
 @section('content')
     <div class="container">
+        @if($user_id)
+            <div class="row">
+                <div class="col-md-4">
+                    <a href="/create">
+                        <button class="btn btn-primary">Create ad</button>
+                    </a>
+                </div>
+            </div>
+            <br>
+        @endif
+
         <div class="row justify-content-center">
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
@@ -9,7 +20,7 @@
                 </div>
             @endif
 
-            @if ($ads)
+            @if ($ads->isNotEmpty())
                 @foreach($ads as $ad)
                     <div class="col-md-4">
                         <div class="card">
@@ -20,16 +31,17 @@
                             <div class="card-body">
                                 <p>{{ $ad->description }}</p>
                                 <br>
-                                <p>{{ $ad->user->name }} at {{ $ad->created_at }}</p>
+                                <p>Posted by {{ $ad->user->name }} {{ $ad->created_at }}</p>
                             </div>
                             @if($user_id == $ad->user_id)
                                 <div class="card-footer">
-                                    <button class="btn btn-primary">
-                                        <a class="link-button" href="/edit/{{$ad->id}}">Edit</a>
-                                    </button>
-                                    <button class="btn btn-danger">
-                                        <a href="/delete/{{$ad->id}}" class="link-button">Delete</a>
-                                    </button>
+                                    <a class="link-button" href="/edit/{{$ad->id}}">
+                                        <button class="btn btn-primary">Edit</button>
+                                    </a>
+
+                                    <a href="/delete/{{$ad->id}}" class="link-button">
+                                        <button class="btn btn-danger">Delete</button>
+                                    </a>
                                 </div>
                             @endif
                         </div>

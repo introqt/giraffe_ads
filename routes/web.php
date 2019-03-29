@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/create', 'HomeController@create')->name('create');
+Route::get('/{ad}', 'HomeController@show')->name('show');
+Route::get('/edit/{ad}', 'HomeController@edit')->name('edit');
+Route::post('/save', 'HomeController@save');
+Route::delete('/edit/{ad}', 'HomeController@delete')->name('edit');
+Route::get('/save', function () {
+    return redirect('home');
+});

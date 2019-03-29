@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Http\Requests\SaveAdRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Ad extends Model
 {
@@ -16,5 +18,17 @@ class Ad extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function setUserIdAttribute()
+    {
+        $this->attributes['user_id'] = Auth::id();
+    }
+
+    public function saveAd(SaveAdRequest $request)
+    {
+        $this->setUserIdAttribute();
+        $this->fill($request->validated());
+        $this->save();
     }
 }

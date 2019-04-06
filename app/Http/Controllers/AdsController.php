@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ad;
 use App\Http\Requests\SaveAdRequest;
+use Illuminate\Support\Facades\Auth;
 
 class AdsController extends Controller
 {
@@ -64,7 +65,9 @@ class AdsController extends Controller
      */
     public function update(SaveAdRequest $request, Ad $ad)
     {
-        $ad->update($request->all());
+        if (Auth::id() === $ad->user_id) {
+            $ad->update($request->all());
+        }
 
         return redirect(route('ads.show', ['id' => $ad->id]));
     }
@@ -75,7 +78,9 @@ class AdsController extends Controller
      */
     public function destroy(Ad $ad)
     {
-        $ad->delete();
+        if (Auth::id() === $ad->user_id) {
+            $ad->delete();
+        }
         return redirect('home');
     }
 }

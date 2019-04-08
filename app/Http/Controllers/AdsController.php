@@ -55,7 +55,11 @@ class AdsController extends Controller
      */
     public function edit(Ad $ad)
     {
-        return view('ads.edit', compact('ad'));
+        if (Auth::user()->can('change', $ad)) {
+            return view('ads.edit', compact('ad'));
+        }
+
+        return abort(403, 'Anauthorized action.');
     }
 
     /**
@@ -65,11 +69,13 @@ class AdsController extends Controller
      */
     public function update(SaveAdRequest $request, Ad $ad)
     {
-        if (Auth::id() === $ad->user_id) {
+        if (Auth::user()->can('change', $ad)) {
             $ad->update($request->all());
+
+            return redirect(route('ads.show', ['id' => $ad->id]));
         }
 
-        return redirect(route('ads.show', ['id' => $ad->id]));
+        return abort(403, 'Anauthorized action.');
     }
 
     /**
@@ -78,9 +84,12 @@ class AdsController extends Controller
      */
     public function destroy(Ad $ad)
     {
-        if (Auth::id() === $ad->user_id) {
+        if (Auth::user()->can('change', $ad)) {
             $ad->delete();
+
+            return redirect('home');
         }
-        return redirect('home');
+
+        return abort(403, 'Anauthorized action.');
     }
 }
